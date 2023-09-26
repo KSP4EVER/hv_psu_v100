@@ -1,0 +1,486 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?application progid="SMath Studio Desktop" version="1.0.8348.30405"?>
+<worksheet xmlns="http://smath.info/schemas/worksheet/1.0">
+  <settings ppi="96">
+    <identity>
+      <id>953810e6-f2bd-48ae-b358-da91157cdef2</id>
+      <revision>3</revision>
+    </identity>
+    <calculation>
+      <precision>4</precision>
+      <exponentialThreshold>5</exponentialThreshold>
+      <trailingZeros>false</trailingZeros>
+      <significantDigitsMode>false</significantDigitsMode>
+      <roundingMode>0</roundingMode>
+      <approximateEqualAccuracy>0</approximateEqualAccuracy>
+      <fractions>decimal</fractions>
+    </calculation>
+    <pageModel active="false" viewMode="2" printGrid="false" printAreas="true" simpleEqualsOnly="false" printBackgroundImages="true">
+      <paper id="9" orientation="Portrait" width="827" height="1169" />
+      <margins left="39" right="39" top="49" bottom="49" />
+      <header alignment="Center" color="#a9a9a9">&amp;[DATE] &amp;[TIME] - &amp;[FILENAME]</header>
+      <footer alignment="Center" color="#a9a9a9">&amp;[PAGENUM] / &amp;[COUNT]</footer>
+      <backgrounds />
+    </pageModel>
+    <dependencies>
+      <assembly name="SMath Studio Desktop" version="1.0.8348.30405" guid="a37cba83-b69c-4c71-9992-55ff666763bd" />
+      <assembly name="MathRegion" version="1.11.8348.30405" guid="02f1ab51-215b-466e-a74d-5d8b1cf85e8d" />
+    </dependencies>
+  </settings>
+  <regions type="content">
+    <region left="45" top="9" width="111" height="30" color="#000000" fontSize="14">
+      <math>
+        <input>
+          <e type="operand">f</e>
+          <e type="operand">50</e>
+          <e type="operand" style="unit">kHz</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="207" top="9" width="139" height="54" color="#000000" fontSize="14">
+      <math>
+        <input>
+          <e type="operand">T</e>
+          <e type="operand">1</e>
+          <e type="operand">f</e>
+          <e type="operator" args="2">/</e>
+          <e type="operator" args="2">:</e>
+        </input>
+        <contract>
+          <e type="operand" style="unit">μs</e>
+        </contract>
+        <result action="numeric">
+          <e type="operand">20</e>
+        </result>
+      </math>
+    </region>
+    <region left="387" top="18" width="122" height="30" color="#000000" fontSize="14">
+      <math>
+        <input>
+          <e type="operand">Lse</e>
+          <e type="operand">40</e>
+          <e type="operand" style="unit">μH</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="45" top="72" width="122" height="30" color="#000000" fontSize="14">
+      <math>
+        <input>
+          <e type="operand">L1</e>
+          <e type="operand">420</e>
+          <e type="operand" style="unit">μH</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="216" top="72" width="94" height="30" color="#000000" fontSize="14">
+      <math>
+        <input>
+          <e type="operand">at</e>
+          <e type="operand">100</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="387" top="72" width="134" height="30" color="#000000" fontSize="14">
+      <math>
+        <input>
+          <e type="operand">rds</e>
+          <e type="operand">200</e>
+          <e type="operand" style="unit">mΩ</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="216" top="108" width="111" height="30" color="#000000" fontSize="14">
+      <math>
+        <input>
+          <e type="operand">Ids</e>
+          <e type="operand">4</e>
+          <e type="operand" style="unit">mA</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="45" top="117" width="100" height="30" color="#000000" fontSize="14">
+      <math>
+        <input>
+          <e type="operand">Ube</e>
+          <e type="operand">9</e>
+          <e type="operand" style="unit">V</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="387" top="117" width="201" height="30" color="#000000" fontSize="14">
+      <math>
+        <input>
+          <e type="operand">Ifeedback</e>
+          <e type="operand">200</e>
+          <e type="operand" style="unit">μA</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="54" top="153" width="134" height="30" color="#000000" fontSize="14">
+      <math>
+        <input>
+          <e type="operand">Uds</e>
+          <e type="operand">1000</e>
+          <e type="operand" style="unit">V</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="216" top="153" width="111" height="30" color="#000000" fontSize="14">
+      <math>
+        <input>
+          <e type="operand">ΔUds</e>
+          <e type="operand">2</e>
+          <e type="operand" style="unit">V</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="45" top="207" width="274" height="54" color="#000000" fontSize="14">
+      <math>
+        <input>
+          <e type="operand">d</e>
+          <e type="operand">Uds</e>
+          <e type="operand">Uds</e>
+          <e type="operand">at</e>
+          <e type="operand">Ube</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">+</e>
+          <e type="operator" args="2">/</e>
+          <e type="operator" args="2">:</e>
+        </input>
+        <result action="numeric">
+          <e type="operand">0.5263</e>
+        </result>
+      </math>
+    </region>
+    <region left="441" top="207" width="243" height="54" color="#000000" fontSize="14">
+      <math>
+        <input>
+          <e type="operand">tbe</e>
+          <e type="operand">1</e>
+          <e type="operand">f</e>
+          <e type="operator" args="2">/</e>
+          <e type="operand">d</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">:</e>
+        </input>
+        <contract>
+          <e type="operand" style="unit">μs</e>
+        </contract>
+        <result action="numeric">
+          <e type="operand">10.5263</e>
+        </result>
+      </math>
+    </region>
+    <region left="45" top="270" width="302" height="54" color="#000000" fontSize="14">
+      <math>
+        <input>
+          <e type="operand">ΔIl</e>
+          <e type="operand">Ube</e>
+          <e type="operand">at</e>
+          <e type="operand">L1</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">/</e>
+          <e type="operand">tbe</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">:</e>
+        </input>
+        <contract>
+          <e type="operand" style="unit">mA</e>
+        </contract>
+        <result action="numeric">
+          <e type="operand">2.2556</e>
+        </result>
+      </math>
+    </region>
+    <region left="414" top="270" width="266" height="54" color="#000000" fontSize="14">
+      <math>
+        <input>
+          <e type="operand">C</e>
+          <e type="operand">Ids</e>
+          <e type="operand">tbe</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">ΔUds</e>
+          <e type="operator" args="2">/</e>
+          <e type="operator" args="2">:</e>
+        </input>
+        <contract>
+          <e type="operand" style="unit">nF</e>
+        </contract>
+        <result action="numeric">
+          <e type="operand">21.0526</e>
+        </result>
+      </math>
+    </region>
+    <region left="36" top="333" width="356" height="54" color="#000000" fontSize="14">
+      <math>
+        <input>
+          <e type="operand">Iμav</e>
+          <e type="operand">at</e>
+          <e type="operand">Ids</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">1</e>
+          <e type="operand">1</e>
+          <e type="operand">d</e>
+          <e type="operator" args="2">-</e>
+          <e type="operator" args="2">/</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">:</e>
+        </input>
+        <contract>
+          <e type="operand" style="unit">mA</e>
+        </contract>
+        <result action="numeric">
+          <e type="operand">844.4444</e>
+        </result>
+      </math>
+    </region>
+    <region left="396" top="333" width="371" height="54" color="#000000" fontSize="14">
+      <math>
+        <input>
+          <e type="operand">Idmax</e>
+          <e type="operand">1</e>
+          <e type="operand">1</e>
+          <e type="operand">d</e>
+          <e type="operator" args="2">-</e>
+          <e type="operator" args="2">/</e>
+          <e type="operand">Ids</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">ΔIl</e>
+          <e type="operand">2</e>
+          <e type="operator" args="2">/</e>
+          <e type="operator" args="2">+</e>
+          <e type="operator" args="2">:</e>
+        </input>
+        <contract>
+          <e type="operand" style="unit">mA</e>
+        </contract>
+        <result action="numeric">
+          <e type="operand">9.5723</e>
+        </result>
+      </math>
+    </region>
+    <region left="405" top="387" width="255" height="54" color="#000000" fontSize="14">
+      <math>
+        <input>
+          <e type="operand">Ukmax</e>
+          <e type="operand">Ube</e>
+          <e type="operand">Uds</e>
+          <e type="operand">at</e>
+          <e type="operator" args="2">/</e>
+          <e type="operator" args="2">+</e>
+          <e type="operator" args="2">:</e>
+        </input>
+        <result action="numeric">
+          <e type="operand">19</e>
+          <e type="operand" style="unit">V</e>
+          <e type="operator" args="2">*</e>
+        </result>
+      </math>
+    </region>
+    <region left="36" top="396" width="310" height="30" color="#000000" fontSize="14">
+      <math>
+        <input>
+          <e type="operand">Udmax</e>
+          <e type="operand">at</e>
+          <e type="operand">Ube</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">Uds</e>
+          <e type="operator" args="2">+</e>
+          <e type="operator" args="2">:</e>
+        </input>
+        <result action="numeric">
+          <e type="operand">1900</e>
+          <e type="operand" style="unit">V</e>
+          <e type="operator" args="2">*</e>
+        </result>
+      </math>
+    </region>
+    <region left="369" top="450" width="196" height="54" color="#000000" fontSize="14">
+      <math>
+        <input>
+          <e type="operand">Uzmin</e>
+          <e type="operand">Uds</e>
+          <e type="operand">at</e>
+          <e type="operator" args="2">/</e>
+          <e type="operator" args="2">:</e>
+        </input>
+        <result action="numeric">
+          <e type="operand">10</e>
+          <e type="operand" style="unit">V</e>
+          <e type="operator" args="2">*</e>
+        </result>
+      </math>
+    </region>
+    <region left="612" top="459" width="111" height="30" color="#000000" fontSize="14">
+      <math>
+        <input>
+          <e type="operand">Uzn</e>
+          <e type="operand">14</e>
+          <e type="operand" style="unit">V</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="27" top="468" width="329" height="30" color="#000000" fontSize="14">
+      <math>
+        <input>
+          <e type="operand">Ikmax</e>
+          <e type="operand">at</e>
+          <e type="operand">Idmax</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">:</e>
+        </input>
+        <contract>
+          <e type="operand" style="unit">mA</e>
+        </contract>
+        <result action="numeric">
+          <e type="operand">957.2264</e>
+        </result>
+      </math>
+    </region>
+    <region left="144" top="531" width="418" height="56" color="#000000" fontSize="14">
+      <math>
+        <input>
+          <e type="operand">Ifetrms</e>
+          <e type="operand">Ikmax</e>
+          <e type="operand">Ikmax</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">tbe</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">T</e>
+          <e type="operator" args="2">/</e>
+          <e type="function" args="1">sqrt</e>
+          <e type="operator" args="2">:</e>
+        </input>
+        <result action="numeric">
+          <e type="operand">0.6944</e>
+          <e type="operand" style="unit">A</e>
+          <e type="operator" args="2">*</e>
+        </result>
+      </math>
+    </region>
+    <region left="144" top="594" width="332" height="46" color="#000000" fontSize="14">
+      <math>
+        <input>
+          <e type="operand">Pfet</e>
+          <e type="operand">Ifetrms</e>
+          <e type="operand">2</e>
+          <e type="operator" args="2">^</e>
+          <e type="operand">rds</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">:</e>
+        </input>
+        <result action="numeric">
+          <e type="operand">0.0965</e>
+          <e type="operand" style="unit">W</e>
+          <e type="operator" args="2">*</e>
+        </result>
+      </math>
+    </region>
+    <region left="153" top="648" width="497" height="94" color="#000000" fontSize="14">
+      <math>
+        <input>
+          <e type="operand">Pz</e>
+          <e type="operand">Uzn</e>
+          <e type="operand">Uzn</e>
+          <e type="operand">Uds</e>
+          <e type="operand">at</e>
+          <e type="operator" args="2">/</e>
+          <e type="operator" args="2">-</e>
+          <e type="operator" args="2">/</e>
+          <e type="operand">Lse</e>
+          <e type="operand">2</e>
+          <e type="operand">T</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">/</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">at</e>
+          <e type="operand">Ids</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">T</e>
+          <e type="operand">T</e>
+          <e type="operand">tbe</e>
+          <e type="operator" args="2">-</e>
+          <e type="operator" args="2">/</e>
+          <e type="operator" args="2">*</e>
+          <e type="bracket">(</e>
+          <e type="operand">2</e>
+          <e type="operator" args="2">^</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">:</e>
+        </input>
+        <contract>
+          <e type="operand" style="unit">W</e>
+        </contract>
+        <result action="symbolic">
+          <e type="operand">5054</e>
+          <e type="operand">2025</e>
+          <e type="operator" args="2">/</e>
+        </result>
+      </math>
+    </region>
+    <region left="198" top="765" width="363" height="30" color="#000000" fontSize="14">
+      <math>
+        <input>
+          <e type="operand">Pfeedback</e>
+          <e type="operand">Uds</e>
+          <e type="operand">Ifeedback</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">:</e>
+        </input>
+        <result action="numeric">
+          <e type="operand">0.2</e>
+          <e type="operand" style="unit">W</e>
+          <e type="operator" args="2">*</e>
+        </result>
+      </math>
+    </region>
+    <region left="108" top="855" width="542" height="54" color="#000000" fontSize="14">
+      <math>
+        <input>
+          <e type="operand">η</e>
+          <e type="operand">Uds</e>
+          <e type="operand">Ids</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">Ube</e>
+          <e type="operand">Ifetrms</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">Pz</e>
+          <e type="operator" args="2">+</e>
+          <e type="operand">Pfet</e>
+          <e type="operator" args="2">+</e>
+          <e type="operand">Pfeedback</e>
+          <e type="operator" args="2">+</e>
+          <e type="operator" args="2">/</e>
+          <e type="operator" args="2">:</e>
+        </input>
+        <contract>
+          <e type="operand" style="unit">%</e>
+        </contract>
+        <result action="numeric">
+          <e type="operand">44.2367</e>
+        </result>
+      </math>
+    </region>
+  </regions>
+</worksheet>
