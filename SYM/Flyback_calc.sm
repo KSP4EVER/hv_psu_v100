@@ -4,7 +4,7 @@
   <settings ppi="96">
     <identity>
       <id>953810e6-f2bd-48ae-b358-da91157cdef2</id>
-      <revision>3</revision>
+      <revision>4</revision>
     </identity>
     <calculation>
       <precision>4</precision>
@@ -334,7 +334,7 @@
       <math>
         <input>
           <e type="operand">Uzn</e>
-          <e type="operand">14</e>
+          <e type="operand">20</e>
           <e type="operand" style="unit">V</e>
           <e type="operator" args="2">*</e>
           <e type="operator" args="2">:</e>
@@ -433,7 +433,7 @@
           <e type="operand" style="unit">W</e>
         </contract>
         <result action="symbolic">
-          <e type="operand">5054</e>
+          <e type="operand">2888</e>
           <e type="operand">2025</e>
           <e type="operator" args="2">/</e>
         </result>
@@ -478,7 +478,7 @@
           <e type="operand" style="unit">%</e>
         </contract>
         <result action="numeric">
-          <e type="operand">44.2367</e>
+          <e type="operand">50.1717</e>
         </result>
       </math>
     </region>
