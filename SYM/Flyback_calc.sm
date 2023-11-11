@@ -4,7 +4,7 @@
   <settings ppi="96">
     <identity>
       <id>953810e6-f2bd-48ae-b358-da91157cdef2</id>
-      <revision>4</revision>
+      <revision>5</revision>
     </identity>
     <calculation>
       <precision>4</precision>
@@ -102,7 +102,7 @@
       <math>
         <input>
           <e type="operand">Ids</e>
-          <e type="operand">4</e>
+          <e type="operand">2</e>
           <e type="operand" style="unit">mA</e>
           <e type="operator" args="2">*</e>
           <e type="operator" args="2">:</e>
@@ -226,7 +226,7 @@
           <e type="operand" style="unit">nF</e>
         </contract>
         <result action="numeric">
-          <e type="operand">21.0526</e>
+          <e type="operand">10.5263</e>
         </result>
       </math>
     </region>
@@ -249,11 +249,11 @@
           <e type="operand" style="unit">mA</e>
         </contract>
         <result action="numeric">
-          <e type="operand">844.4444</e>
+          <e type="operand">422.2222</e>
         </result>
       </math>
     </region>
-    <region left="396" top="333" width="371" height="54" color="#000000" fontSize="14">
+    <region left="396" top="333" width="349" height="54" color="#000000" fontSize="14">
       <math>
         <input>
           <e type="operand">Idmax</e>
@@ -274,7 +274,7 @@
           <e type="operand" style="unit">mA</e>
         </contract>
         <result action="numeric">
-          <e type="operand">9.5723</e>
+          <e type="operand">5.35</e>
         </result>
       </math>
     </region>
@@ -354,7 +354,7 @@
           <e type="operand" style="unit">mA</e>
         </contract>
         <result action="numeric">
-          <e type="operand">957.2264</e>
+          <e type="operand">535.0042</e>
         </result>
       </math>
     </region>
@@ -373,7 +373,7 @@
           <e type="operator" args="2">:</e>
         </input>
         <result action="numeric">
-          <e type="operand">0.6944</e>
+          <e type="operand">0.3881</e>
           <e type="operand" style="unit">A</e>
           <e type="operator" args="2">*</e>
         </result>
@@ -391,7 +391,7 @@
           <e type="operator" args="2">:</e>
         </input>
         <result action="numeric">
-          <e type="operand">0.0965</e>
+          <e type="operand">0.0301</e>
           <e type="operand" style="unit">W</e>
           <e type="operator" args="2">*</e>
         </result>
@@ -433,7 +433,7 @@
           <e type="operand" style="unit">W</e>
         </contract>
         <result action="symbolic">
-          <e type="operand">2888</e>
+          <e type="operand">722</e>
           <e type="operand">2025</e>
           <e type="operator" args="2">/</e>
         </result>
@@ -478,7 +478,7 @@
           <e type="operand" style="unit">%</e>
         </contract>
         <result action="numeric">
-          <e type="operand">50.1717</e>
+          <e type="operand">49.0212</e>
         </result>
       </math>
     </region>
