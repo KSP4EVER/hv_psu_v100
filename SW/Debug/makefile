@@ -60,8 +60,8 @@ all: main-build
 main-build: hv_psu_controller.elf secondary-outputs
 
 # Tool invocations
-hv_psu_controller.elf hv_psu_controller.map: $(OBJS) $(USER_OBJS) E:\hv_psu_v100\SW\STM32F301K6TX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "hv_psu_controller.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"E:\hv_psu_v100\SW\STM32F301K6TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="hv_psu_controller.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+hv_psu_controller.elf hv_psu_controller.map: $(OBJS) $(USER_OBJS) C:\DEV\private\hv_psu_v100\SW\STM32F301K6TX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "hv_psu_controller.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\DEV\private\hv_psu_v100\SW\STM32F301K6TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="hv_psu_controller.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
