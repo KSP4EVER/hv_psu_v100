@@ -43,8 +43,6 @@
 ADC_HandleTypeDef hadc1;
 DMA_HandleTypeDef hdma_adc1;
 
-COMP_HandleTypeDef hcomp2;
-
 DAC_HandleTypeDef hdac;
 
 I2C_HandleTypeDef hi2c1;
@@ -65,7 +63,6 @@ static void MX_ADC1_Init(void);
 static void MX_DAC_Init(void);
 static void MX_I2C1_Init(void);
 static void MX_USART1_UART_Init(void);
-static void MX_COMP2_Init(void);
 static void MX_TIM1_Init(void);
 /* USER CODE BEGIN PFP */
 
@@ -109,24 +106,36 @@ int main(void)
   MX_DAC_Init();
   MX_I2C1_Init();
   MX_USART1_UART_Init();
-  MX_COMP2_Init();
   MX_TIM1_Init();
   /* USER CODE BEGIN 2 */
-
+  uint32_t dac_val = 0;
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  uint8_t data[] = "HELLO WORLD \r\n";
-	  char Rx_data[10] = "";
+	  //uint8_t data[] = "HELLO WORLD \r\n";
+	  char Rx_data[32] = "";
+	  char command[16] = "";
+	  char data[16] = "";
 
-	  HAL_UART_Receive(&huart1, Rx_data, 10, 1000);
 
-	  if(strcmp("S",Rx_data) == 0)
-	  HAL_UART_Transmit(&huart1, data, sizeof (data), 10);
+	  HAL_UART_Receive(&huart1, (uint8_t*)Rx_data, 32, 100);
+	  sscanf(Rx_data,"%s %i", command,&dac_val);
 
+	  if(strcmp("Set_DAC",command) == 0)
+	  {
+		  sprintf(data,"%d",dac_val);
+		  HAL_DAC_SetValue(&hdac, DAC_CHANNEL_1, DAC_ALIGN_12B_R, dac_val);
+		  HAL_UART_Transmit(&huart1, (uint8_t*)data, sizeof (data), 10);
+
+	  }
+	  if(strcmp("Get_DAC",command) == 0)
+	  {
+		  sprintf(data,"%d",dac_val);
+		  HAL_UART_Transmit(&huart1, (uint8_t*)data, sizeof(data), 10);
+	  }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -258,38 +267,6 @@ static void MX_ADC1_Init(void)
 }
 
 /**
-  * @brief COMP2 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_COMP2_Init(void)
-{
-
-  /* USER CODE BEGIN COMP2_Init 0 */
-
-  /* USER CODE END COMP2_Init 0 */
-
-  /* USER CODE BEGIN COMP2_Init 1 */
-
-  /* USER CODE END COMP2_Init 1 */
-  hcomp2.Instance = COMP2;
-  hcomp2.Init.InvertingInput = COMP_INVERTINGINPUT_IO1;
-  hcomp2.Init.NonInvertingInput = COMP_NONINVERTINGINPUT_DAC1SWITCHCLOSED;
-  hcomp2.Init.Output = COMP_OUTPUT_NONE;
-  hcomp2.Init.OutputPol = COMP_OUTPUTPOL_NONINVERTED;
-  hcomp2.Init.BlankingSrce = COMP_BLANKINGSRCE_NONE;
-  hcomp2.Init.TriggerMode = COMP_TRIGGERMODE_NONE;
-  if (HAL_COMP_Init(&hcomp2) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN COMP2_Init 2 */
-
-  /* USER CODE END COMP2_Init 2 */
-
-}
-
-/**
   * @brief DAC Initialization Function
   * @param None
   * @retval None
@@ -324,7 +301,10 @@ static void MX_DAC_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN DAC_Init 2 */
-
+  HAL_DAC_MspInit(&hdac);
+  __HAL_DAC_ENABLE(&hdac,DAC_CHANNEL_1);
+  HAL_DAC_Start(&hdac,DAC_CHANNEL_1);
+  HAL_DAC_SetValue(&hdac,DAC_CHANNEL_1,DAC_ALIGN_12B_R,0);
   /* USER CODE END DAC_Init 2 */
 
 }
