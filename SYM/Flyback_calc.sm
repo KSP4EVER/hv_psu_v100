@@ -4,7 +4,7 @@
   <settings ppi="96">
     <identity>
       <id>953810e6-f2bd-48ae-b358-da91157cdef2</id>
-      <revision>5</revision>
+      <revision>6</revision>
     </identity>
     <calculation>
       <precision>4</precision>
@@ -153,7 +153,39 @@
         </input>
       </math>
     </region>
-    <region left="45" top="207" width="274" height="54" color="#000000" fontSize="14">
+    <region left="387" top="153" width="116" height="30" color="#000000" fontSize="14">
+      <math optimize="2">
+        <input>
+          <e type="operand">Δd</e>
+          <e type="operand">0.001</e>
+          <e type="operator" args="2">:</e>
+        </input>
+      </math>
+    </region>
+    <region left="225" top="207" width="386" height="56" color="#000000" fontSize="14">
+      <math>
+        <input>
+          <e type="operand">ΔUdsΔd</e>
+          <e type="operand">at</e>
+          <e type="operand">Ube</e>
+          <e type="operator" args="2">*</e>
+          <e type="operand">Δd</e>
+          <e type="operand">1</e>
+          <e type="operand">Δd</e>
+          <e type="operator" args="2">-</e>
+          <e type="operator" args="2">/</e>
+          <e type="operator" args="2">*</e>
+          <e type="operator" args="2">:</e>
+          <e type="bracket">(</e>
+        </input>
+        <result action="numeric">
+          <e type="operand">0.9009</e>
+          <e type="operand" style="unit">V</e>
+          <e type="operator" args="2">*</e>
+        </result>
+      </math>
+    </region>
+    <region left="45" top="261" width="274" height="54" color="#000000" fontSize="14">
       <math>
         <input>
           <e type="operand">d</e>
@@ -171,7 +203,7 @@
         </result>
       </math>
     </region>
-    <region left="441" top="207" width="243" height="54" color="#000000" fontSize="14">
+    <region left="441" top="261" width="243" height="54" color="#000000" fontSize="14">
       <math>
         <input>
           <e type="operand">tbe</e>
@@ -190,7 +222,7 @@
         </result>
       </math>
     </region>
-    <region left="45" top="270" width="302" height="54" color="#000000" fontSize="14">
+    <region left="45" top="324" width="302" height="54" color="#000000" fontSize="14">
       <math>
         <input>
           <e type="operand">ΔIl</e>
@@ -211,7 +243,7 @@
         </result>
       </math>
     </region>
-    <region left="414" top="270" width="266" height="54" color="#000000" fontSize="14">
+    <region left="414" top="324" width="266" height="54" color="#000000" fontSize="14">
       <math>
         <input>
           <e type="operand">C</e>
@@ -230,7 +262,7 @@
         </result>
       </math>
     </region>
-    <region left="36" top="333" width="356" height="54" color="#000000" fontSize="14">
+    <region left="36" top="387" width="356" height="54" color="#000000" fontSize="14">
       <math>
         <input>
           <e type="operand">Iμav</e>
@@ -253,7 +285,7 @@
         </result>
       </math>
     </region>
-    <region left="396" top="333" width="349" height="54" color="#000000" fontSize="14">
+    <region left="396" top="387" width="349" height="54" color="#000000" fontSize="14">
       <math>
         <input>
           <e type="operand">Idmax</e>
@@ -278,7 +310,7 @@
         </result>
       </math>
     </region>
-    <region left="405" top="387" width="255" height="54" color="#000000" fontSize="14">
+    <region left="405" top="441" width="255" height="54" color="#000000" fontSize="14">
       <math>
         <input>
           <e type="operand">Ukmax</e>
@@ -296,7 +328,7 @@
         </result>
       </math>
     </region>
-    <region left="36" top="396" width="310" height="30" color="#000000" fontSize="14">
+    <region left="36" top="450" width="310" height="30" color="#000000" fontSize="14">
       <math>
         <input>
           <e type="operand">Udmax</e>
@@ -314,7 +346,7 @@
         </result>
       </math>
     </region>
-    <region left="369" top="450" width="196" height="54" color="#000000" fontSize="14">
+    <region left="369" top="504" width="196" height="54" color="#000000" fontSize="14">
       <math>
         <input>
           <e type="operand">Uzmin</e>
@@ -330,7 +362,7 @@
         </result>
       </math>
     </region>
-    <region left="612" top="459" width="111" height="30" color="#000000" fontSize="14">
+    <region left="612" top="513" width="111" height="30" color="#000000" fontSize="14">
       <math>
         <input>
           <e type="operand">Uzn</e>
@@ -341,7 +373,7 @@
         </input>
       </math>
     </region>
-    <region left="27" top="468" width="329" height="30" color="#000000" fontSize="14">
+    <region left="27" top="522" width="329" height="30" color="#000000" fontSize="14">
       <math>
         <input>
           <e type="operand">Ikmax</e>
@@ -358,7 +390,7 @@
         </result>
       </math>
     </region>
-    <region left="144" top="531" width="418" height="56" color="#000000" fontSize="14">
+    <region left="144" top="585" width="418" height="56" color="#000000" fontSize="14">
       <math>
         <input>
           <e type="operand">Ifetrms</e>
@@ -379,7 +411,7 @@
         </result>
       </math>
     </region>
-    <region left="144" top="594" width="332" height="46" color="#000000" fontSize="14">
+    <region left="144" top="648" width="332" height="46" color="#000000" fontSize="14">
       <math>
         <input>
           <e type="operand">Pfet</e>
@@ -397,7 +429,7 @@
         </result>
       </math>
     </region>
-    <region left="153" top="648" width="497" height="94" color="#000000" fontSize="14">
+    <region left="153" top="702" width="497" height="94" color="#000000" fontSize="14">
       <math>
         <input>
           <e type="operand">Pz</e>
@@ -439,7 +471,7 @@
         </result>
       </math>
     </region>
-    <region left="198" top="765" width="363" height="30" color="#000000" fontSize="14">
+    <region left="198" top="819" width="363" height="30" color="#000000" fontSize="14">
       <math>
         <input>
           <e type="operand">Pfeedback</e>
@@ -455,7 +487,7 @@
         </result>
       </math>
     </region>
-    <region left="108" top="855" width="542" height="54" color="#000000" fontSize="14">
+    <region left="108" top="909" width="542" height="54" color="#000000" fontSize="14">
       <math>
         <input>
           <e type="operand">η</e>
