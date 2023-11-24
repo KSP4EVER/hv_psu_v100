@@ -48,11 +48,16 @@ DAC_HandleTypeDef hdac;
 I2C_HandleTypeDef hi2c1;
 
 TIM_HandleTypeDef htim1;
+TIM_HandleTypeDef htim2;
 
 UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
-
+volatile uint32_t val = 0;
+volatile float div_const = 0.313121;
+volatile uint32_t uki = 0;
+volatile uint32_t uref = 0;
+volatile uint32_t Ap = 1;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -64,13 +69,38 @@ static void MX_DAC_Init(void);
 static void MX_I2C1_Init(void);
 static void MX_USART1_UART_Init(void);
 static void MX_TIM1_Init(void);
+static void MX_TIM2_Init(void);
 /* USER CODE BEGIN PFP */
+
+
 
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+	  uint32_t adc_val = 0;
+	  HAL_ADC_Start(&hadc1);
+	  HAL_ADC_PollForConversion(&hadc1, 10); // poll for conversion
+	  adc_val = HAL_ADC_GetValue(&hadc1); // get the adc value
+	  HAL_ADC_Stop(&hadc1); // stop adc
 
+	  //char data[16] = "";
+	  //sprintf(data,"%d,%d\n",adc_val,uref);
+	  //HAL_UART_Transmit(&huart1, (uint8_t*)data, sizeof (data), 10);
+	  if(adc_val < uref)
+	  {
+		  //htim1.Instance->CCR1 = Ap*(uref - adc_val);
+		  if(htim1.Instance->CCR1 != 1024) htim1.Instance->CCR1++;
+	  }
+	  if(adc_val > uref)
+	  {
+		  //htim1.Instance->CCR1 = 0;
+		  if(htim1.Instance->CCR1 != 0) htim1.Instance->CCR1--;
+	  }
+
+}
 /* USER CODE END 0 */
 
 /**
@@ -107,14 +137,13 @@ int main(void)
   MX_I2C1_Init();
   MX_USART1_UART_Init();
   MX_TIM1_Init();
+  MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
-  uint32_t val = 0;
-  float div_const = 0.313121;
-  int32_t uki = 0;
-  int32_t uref = 0;
-  int32_t Ap = 1;
 
-  HAL_TIM_Base_Start_IT(&htim1);
+
+  HAL_TIM_Base_Start_IT(&htim2);
+
+  //htim1.Instance->CCR1 = 30;
   HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
   /* USER CODE END 2 */
 
@@ -123,9 +152,9 @@ int main(void)
   while (1)
   {
 	  //uint8_t data[] = "HELLO WORLD \r\n";
-	  char Rx_data[32] = "";
-	  char command[16] = "";
-	  char data[16] = "";
+	  volatile char Rx_data[32] = "";
+	  volatile char command[16] = "";
+	  volatile char data[16] = "";
 
 
 	  HAL_UART_Receive(&huart1, (uint8_t*)Rx_data, 32, 100);
@@ -152,9 +181,9 @@ int main(void)
 	  {
 		  sprintf(data,"%d",val);
 		  HAL_UART_Transmit(&huart1, (uint8_t*)data, sizeof(data), 10);
-		  uki = (int32_t)val;
+		  uki = (uint32_t)val;
 
-		  uref = (int32_t)(div_const*(float)uki);
+		  uref = (uint32_t)(div_const*(float)uki);
 		  sprintf(data,"%d",uref);
 		  HAL_UART_Transmit(&huart1, (uint8_t*)data, sizeof(data), 10);
 
@@ -164,27 +193,7 @@ int main(void)
     /* USER CODE BEGIN 3 */
   }
 
-  void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
-  {
-	  int32_t adc_val = 0;
-	 /* HAL_ADC_Start(&hadc1);
-	  HAL_ADC_PollForConversion(&hadc1, 100); // poll for conversion
-	  adc_val = (int32_t)HAL_ADC_GetValue(&hadc1); // get the adc value
-	  HAL_ADC_Stop(&hadc1); // stop adc
-	 */
-	  char data[16] = "";
-	  if(adc_val < uref)
-	  {
-		  TIM1->CCR1 = Ap*(uref - adc_val);
-		  sprintf(data,"%d",TIM1->CCR1);
-		  HAL_UART_Transmit(&huart1, (uint8_t*)data, sizeof(data), 10);
-	  }
-	  else
-	  {
-		  TIM1->CCR1 = 0;
-	  }
 
-  }
   /* USER CODE END 3 */
 }
 
@@ -273,7 +282,15 @@ static void MX_ADC1_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN ADC1_Init 2 */
+  ADC_ChannelConfTypeDef sConfig = {0};
 
+   sConfig.Channel = ADC_CHANNEL_2;
+   sConfig.Rank = ADC_REGULAR_RANK_1;
+   sConfig.SamplingTime = ADC_SAMPLETIME_1CYCLE_5;
+   if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
+   {
+     Error_Handler();
+   }
   /* USER CODE END ADC1_Init 2 */
 
 }
@@ -420,13 +437,14 @@ static void MX_TIM1_Init(void)
   sConfigOC.Pulse = 0;
   sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
   sConfigOC.OCNPolarity = TIM_OCNPOLARITY_HIGH;
-  sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
+  sConfigOC.OCFastMode = TIM_OCFAST_ENABLE;
   sConfigOC.OCIdleState = TIM_OCIDLESTATE_RESET;
   sConfigOC.OCNIdleState = TIM_OCNIDLESTATE_RESET;
   if (HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
   {
     Error_Handler();
   }
+  __HAL_TIM_DISABLE_OCxPRELOAD(&htim1, TIM_CHANNEL_1);
   sBreakDeadTimeConfig.OffStateRunMode = TIM_OSSR_DISABLE;
   sBreakDeadTimeConfig.OffStateIDLEMode = TIM_OSSI_DISABLE;
   sBreakDeadTimeConfig.LockLevel = TIM_LOCKLEVEL_OFF;
@@ -446,6 +464,51 @@ static void MX_TIM1_Init(void)
 
   /* USER CODE END TIM1_Init 2 */
   HAL_TIM_MspPostInit(&htim1);
+
+}
+
+/**
+  * @brief TIM2 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM2_Init(void)
+{
+
+  /* USER CODE BEGIN TIM2_Init 0 */
+
+  /* USER CODE END TIM2_Init 0 */
+
+  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+
+  /* USER CODE BEGIN TIM2_Init 1 */
+
+  /* USER CODE END TIM2_Init 1 */
+  htim2.Instance = TIM2;
+  htim2.Init.Prescaler = 0;
+  htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim2.Init.Period = 1200;
+  htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+  if (HAL_TIM_ConfigClockSource(&htim2, &sClockSourceConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim2, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM2_Init 2 */
+
+  /* USER CODE END TIM2_Init 2 */
 
 }
 
