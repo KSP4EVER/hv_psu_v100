@@ -56,7 +56,7 @@ UART_HandleTypeDef huart1;
 volatile uint32_t val = 0;
 volatile float div_const = 0.313121;
 volatile uint32_t uki = 0;
-volatile uint32_t uref = 0;
+volatile float uref = 0;
 volatile uint32_t Ap = 1;
 /* USER CODE END PV */
 
@@ -78,23 +78,53 @@ static void MX_TIM2_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+float v = 0 ;
+float x_err_prev = 0 ;
+float K_PD = 0.5;
+float K_ID = 0.0001;
+float V_MAX = 1000;
+float V_MIN = 0;
+
+float pi_controller (float x_err )
+{
+	v = v+K_PD*K_ID*x_err+K_PD*(x_err-x_err_prev);
+
+	if ( v > V_MAX)
+	{
+		v = V_MAX;
+	}
+	else if ( v < V_MIN)
+	{
+		v = V_MIN;
+	}
+	x_err_prev = x_err ;
+	return v ;
+}
+
+
+
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
+	  float ufb = 0;
+
 	  uint32_t adc_val = 0;
 	  HAL_ADC_Start(&hadc1);
 	  HAL_ADC_PollForConversion(&hadc1, 10); // poll for conversion
 	  adc_val = HAL_ADC_GetValue(&hadc1); // get the adc value
 	  HAL_ADC_Stop(&hadc1); // stop adc
 
-	  //char data[16] = "";
-	  //sprintf(data,"%d,%d\n",adc_val,uref);
-	  //HAL_UART_Transmit(&huart1, (uint8_t*)data, sizeof (data), 10);
-	  if(adc_val < uref)
+	  ufb = 1000.0*((float)adc_val/1024)*3.3;
+
+	 /* float uerr = (float)uki-ufb;
+	  htim1.Instance->CCR1 = (uint32_t)pi_controller(uerr);
+*/
+
+	  if(ufb < uref)
 	  {
 		  //htim1.Instance->CCR1 = Ap*(uref - adc_val);
-		  if(htim1.Instance->CCR1 != 1024) htim1.Instance->CCR1++;
+		  if(htim1.Instance->CCR1 != 1000) htim1.Instance->CCR1++;
 	  }
-	  if(adc_val > uref)
+	  if(ufb > uref)
 	  {
 		  //htim1.Instance->CCR1 = 0;
 		  if(htim1.Instance->CCR1 != 0) htim1.Instance->CCR1--;
@@ -177,13 +207,19 @@ int main(void)
 		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, val);
 	  }
 
+	  if(strcmp("Set_Duty",command) == 0)
+	  {
+		  htim1.Instance->CCR1 = val;
+	  }
+
 	  if(strcmp("Set_HW",command) == 0)
 	  {
 		  sprintf(data,"%d",val);
 		  HAL_UART_Transmit(&huart1, (uint8_t*)data, sizeof(data), 10);
 		  uki = (uint32_t)val;
 
-		  uref = (uint32_t)(div_const*(float)uki);
+		  // uref = (uint32_t)(div_const*(float)uki);
+		  uref = (float)uki;
 		  sprintf(data,"%d",uref);
 		  HAL_UART_Transmit(&huart1, (uint8_t*)data, sizeof(data), 10);
 
@@ -409,7 +445,7 @@ static void MX_TIM1_Init(void)
   htim1.Instance = TIM1;
   htim1.Init.Prescaler = 0;
   htim1.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim1.Init.Period = 1200;
+  htim1.Init.Period = 1500;
   htim1.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim1.Init.RepetitionCounter = 0;
   htim1.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
@@ -488,7 +524,7 @@ static void MX_TIM2_Init(void)
   htim2.Instance = TIM2;
   htim2.Init.Prescaler = 0;
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2.Init.Period = 1200;
+  htim2.Init.Period = 1500;
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
