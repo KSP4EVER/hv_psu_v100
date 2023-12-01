@@ -58,6 +58,7 @@ volatile float div_const = 0.313121;
 volatile uint32_t uki = 0;
 volatile float uref = 0;
 volatile uint32_t Ap = 1;
+volatile float ufb = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -105,30 +106,31 @@ float pi_controller (float x_err )
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
-	  float ufb = 0;
 
+
+	  if(ufb < uref)
+	  {
+		  //htim1.Instance->CCR1 = Ap*(uref - adc_val);
+		  if(htim1.Instance->CCR1 != 1000) htim1.Instance->CCR1 = htim1.Instance->CCR1+1;
+	  }
+	  if(ufb > uref)
+	  {
+		  //htim1.Instance->CCR1 = 0;
+		  if(htim1.Instance->CCR1 != 0) htim1.Instance->CCR1 = htim1.Instance->CCR1-1;
+	  }
 	  uint32_t adc_val = 0;
 	  HAL_ADC_Start(&hadc1);
 	  HAL_ADC_PollForConversion(&hadc1, 10); // poll for conversion
 	  adc_val = HAL_ADC_GetValue(&hadc1); // get the adc value
 	  HAL_ADC_Stop(&hadc1); // stop adc
 
-	  ufb = 1000.0*((float)adc_val/1024)*3.3;
+	  ufb = 991.0*((float)adc_val/1024)*3.25;
 
 	 /* float uerr = (float)uki-ufb;
 	  htim1.Instance->CCR1 = (uint32_t)pi_controller(uerr);
 */
 
-	  if(ufb < uref)
-	  {
-		  //htim1.Instance->CCR1 = Ap*(uref - adc_val);
-		  if(htim1.Instance->CCR1 != 1000) htim1.Instance->CCR1++;
-	  }
-	  if(ufb > uref)
-	  {
-		  //htim1.Instance->CCR1 = 0;
-		  if(htim1.Instance->CCR1 != 0) htim1.Instance->CCR1--;
-	  }
+
 
 }
 /* USER CODE END 0 */
@@ -273,10 +275,12 @@ void SystemClock_Config(void)
     Error_Handler();
   }
   PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USART1|RCC_PERIPHCLK_I2C1
-                              |RCC_PERIPHCLK_TIM1;
+                              |RCC_PERIPHCLK_TIM1|RCC_PERIPHCLK_ADC1;
   PeriphClkInit.Usart1ClockSelection = RCC_USART1CLKSOURCE_PCLK1;
   PeriphClkInit.I2c1ClockSelection = RCC_I2C1CLKSOURCE_HSI;
   PeriphClkInit.Tim1ClockSelection = RCC_TIM1CLK_HCLK;
+  PeriphClkInit.Adc1ClockSelection = RCC_ADC1PLLCLK_DIV8;
+
   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
   {
     Error_Handler();
@@ -302,7 +306,7 @@ static void MX_ADC1_Init(void)
   /** Common config
   */
   hadc1.Instance = ADC1;
-  hadc1.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV1;
+  hadc1.Init.ClockPrescaler = ADC_CLOCK_ASYNC_DIV1;
   hadc1.Init.Resolution = ADC_RESOLUTION_10B;
   hadc1.Init.ScanConvMode = ADC_SCAN_DISABLE;
   hadc1.Init.ContinuousConvMode = DISABLE;
@@ -445,7 +449,7 @@ static void MX_TIM1_Init(void)
   htim1.Instance = TIM1;
   htim1.Init.Prescaler = 0;
   htim1.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim1.Init.Period = 1500;
+  htim1.Init.Period = 2000;
   htim1.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim1.Init.RepetitionCounter = 0;
   htim1.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
@@ -473,14 +477,13 @@ static void MX_TIM1_Init(void)
   sConfigOC.Pulse = 0;
   sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
   sConfigOC.OCNPolarity = TIM_OCNPOLARITY_HIGH;
-  sConfigOC.OCFastMode = TIM_OCFAST_ENABLE;
+  sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
   sConfigOC.OCIdleState = TIM_OCIDLESTATE_RESET;
   sConfigOC.OCNIdleState = TIM_OCNIDLESTATE_RESET;
   if (HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
   {
     Error_Handler();
   }
-  __HAL_TIM_DISABLE_OCxPRELOAD(&htim1, TIM_CHANNEL_1);
   sBreakDeadTimeConfig.OffStateRunMode = TIM_OSSR_DISABLE;
   sBreakDeadTimeConfig.OffStateIDLEMode = TIM_OSSI_DISABLE;
   sBreakDeadTimeConfig.LockLevel = TIM_LOCKLEVEL_OFF;
@@ -524,7 +527,7 @@ static void MX_TIM2_Init(void)
   htim2.Instance = TIM2;
   htim2.Init.Prescaler = 0;
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2.Init.Period = 1500;
+  htim2.Init.Period = 2000;
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
