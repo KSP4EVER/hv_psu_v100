@@ -57,8 +57,10 @@ volatile uint32_t val = 0;
 volatile float div_const = 0.313121;
 volatile uint32_t uki = 0;
 volatile float uref = 0;
-volatile uint32_t Ap = 1;
+volatile float Ap = 0.1;
 volatile float ufb = 0;
+volatile float duty = 0.0;
+volatile float error = 0.0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -81,14 +83,18 @@ static void MX_TIM2_Init(void);
 /* USER CODE BEGIN 0 */
 float v = 0 ;
 float x_err_prev = 0 ;
-float K_PD = 0.5;
+float K_PD = 2.0;
 float K_ID = 0.0001;
-float V_MAX = 1000;
+float V_MAX = 1500;
 float V_MIN = 0;
 
 float pi_controller (float x_err )
 {
-	v = v+K_PD*K_ID*x_err+K_PD*(x_err-x_err_prev);
+	float integrator = K_PD*K_ID*x_err;
+
+
+
+	v = v+integrator+K_PD*(x_err-x_err_prev);
 
 	if ( v > V_MAX)
 	{
@@ -106,18 +112,31 @@ float pi_controller (float x_err )
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
+	error = uref - ufb;
+	htim1.Instance->CCR1 = (uint32_t)pi_controller(error);
 
+	/*
+	if(error > 0)
+	{
+		duty = Ap*error;
+	}
+	else if (error < 0)
+	{
 
-	  if(ufb < uref)
+	}
+	*/
+	  /*if(ufb < uref)
 	  {
 		  //htim1.Instance->CCR1 = Ap*(uref - adc_val);
-		  if(htim1.Instance->CCR1 != 1000) htim1.Instance->CCR1 = htim1.Instance->CCR1+1;
+		  //if(htim1.Instance->CCR1 != 1000) htim1.Instance->CCR1 = htim1.Instance->CCR1+10;
+
 	  }
 	  if(ufb > uref)
 	  {
 		  //htim1.Instance->CCR1 = 0;
-		  if(htim1.Instance->CCR1 != 0) htim1.Instance->CCR1 = htim1.Instance->CCR1-1;
+		  //if(htim1.Instance->CCR1 >= 40) htim1.Instance->CCR1 = htim1.Instance->CCR1-40;
 	  }
+	  */
 	  uint32_t adc_val = 0;
 	  HAL_ADC_Start(&hadc1);
 	  HAL_ADC_PollForConversion(&hadc1, 10); // poll for conversion
@@ -221,11 +240,14 @@ int main(void)
 		  uki = (uint32_t)val;
 
 		  // uref = (uint32_t)(div_const*(float)uki);
-		  uref = (float)uki;
+		  uref = (float)uki - 40.0;
 		  sprintf(data,"%d",uref);
 		  HAL_UART_Transmit(&huart1, (uint8_t*)data, sizeof(data), 10);
 
 	  }
+	  sprintf(data,"%d\n",htim1.Instance->CCR1);
+	  HAL_UART_Transmit(&huart1, (uint8_t*)data, sizeof(data), 10);
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -527,7 +549,7 @@ static void MX_TIM2_Init(void)
   htim2.Instance = TIM2;
   htim2.Init.Prescaler = 0;
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2.Init.Period = 2000;
+  htim2.Init.Period = 4000;
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
